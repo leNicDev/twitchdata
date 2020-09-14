@@ -29,7 +29,7 @@ func Connect() {
 	log.Printf("Connecting to Cassandra hosts %v\n", hosts)
 
 	cluster := gocql.NewCluster(hosts...)
-	cluster.Keyspace = "twitch"
+	cluster.Keyspace = "twitchdata"
 	cluster.Consistency = gocql.Quorum
 	s, err := cluster.CreateSession()
 	if err != nil {

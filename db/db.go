@@ -31,7 +31,11 @@ func Connect() {
 	cluster := gocql.NewCluster(hosts...)
 	cluster.Keyspace = "twitch"
 	cluster.Consistency = gocql.Quorum
-	s, _ := cluster.CreateSession()
+	s, err := cluster.CreateSession()
+	if err != nil {
+		panic(err)
+	}
+
 	session = s
 
 	// Create message table (if not existing)

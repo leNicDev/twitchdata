@@ -6,6 +6,9 @@ services:
       context: .
     environment:
       - "CASSANDRA_HOSTS=cassandra-seed"
+    depends_on:
+      - cassandra-seed
+      - cassandra1
 
   cassandra-seed:
     image: cassandra:latest

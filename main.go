@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"sync"
 	"twitchdata/chat"
 	"twitchdata/db"
@@ -8,6 +9,8 @@ import (
 )
 
 func main() {
+	log.Println("Starting twitchdata...")
+
 	db.Connect()
 	defer db.Disconnect()
 
@@ -23,6 +26,8 @@ func main() {
 		wg.Add(i)
 		go chat.Connect(channels[i], &wg)
 	}
+
+	log.Println("Application started.")
 
 	// wait for all connected chats
 	wg.Wait()

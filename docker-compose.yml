@@ -17,25 +17,25 @@ services:
     restart: on-failure
 
   cassandra-seed:
-    build:
-      context: ./cassandra
+    image: cassandra:latest
     volumes:
       - "cassandra_data_seed:/var/lib/cassandra"
+      - "./cassandra-init.sh:/cassandra-init.sh"
     environment:
       - "CASSANDRA_SEEDS=cassandra-seed"
       - "CASSANDRA_CLUSTER_NAME=Test Cluster"
       #      needed for setting up custom cluster name
       - "CASSANDRA_DC=se1"
       - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
-      - "CASSANDRA_KEYSPACE=twitchdata"
-      - "REPLICATION_FACTOR=2"
     networks:
       - twitchdata-network
+    command: "sh /cassandra-init.sh"
+    healthcheck:
+      test: [ "CMD-SHELL", "[ $$(nodetool statusgossip) = running ]" ]
   #    restart: always
 
   cassandra1:
-    build:
-      context: ./cassandra
+    image: cassandra:latest
     volumes:
       - "cassandra_data_1:/var/lib/cassandra"
     environment:
@@ -44,8 +44,6 @@ services:
       #      needed for setting up custom cluster name
       - "CASSANDRA_DC=se1"
       - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
-      - "CASSANDRA_KEYSPACE=twitchdata"
-      - "REPLICATION_FACTOR=2"
     networks:
       - twitchdata-network
     depends_on:

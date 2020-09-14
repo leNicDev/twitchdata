@@ -1,7 +1,6 @@
 FROM alpine:3.12
 
 RUN mkdir /app
-WORKDIR /app
-COPY ./twitchdata .
+COPY ./twitchdata /app/twitchdata
 
-CMD ["/app/twitchdata"]
+ENTRYPOINT ["/app/twitchdata"]

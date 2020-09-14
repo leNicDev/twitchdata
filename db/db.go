@@ -2,6 +2,7 @@ package db
 
 import (
 	"github.com/gocql/gocql"
+	"log"
 	"os"
 	"strings"
 	"time"
@@ -24,6 +25,8 @@ func Connect() {
 	hostsenv := os.Getenv("CASSANDRA_HOSTS")
 	hostsenv = strings.Replace(hostsenv, " ", "", -1)
 	hosts := strings.Split(hostsenv, ",")
+
+	log.Printf("Connecting to Cassandra hosts %v\n", hosts)
 
 	cluster := gocql.NewCluster(hosts...)
 	cluster.Keyspace = "twitch"

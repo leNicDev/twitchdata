@@ -48,6 +48,8 @@ services:
       - twitchdata-network
     depends_on:
       - cassandra-seed
+    healthcheck:
+      test: [ "CMD-SHELL", "[ $$(nodetool statusgossip) = running ]" ]
   #    restart: always
 
 #  cassandra2:

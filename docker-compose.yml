@@ -13,6 +13,7 @@ services:
     depends_on:
       - cassandra-seed
       - cassandra1
+    restart: on-failure
 
   cassandra-seed:
     image: cassandra:latest

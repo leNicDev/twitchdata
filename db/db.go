@@ -40,7 +40,7 @@ func Connect() {
 
 	// Create message table (if not existing)
 	createTableQuery := session.Query("CREATE TABLE IF NOT EXISTS message (id uuid PRIMARY KEY, user_id text, user_name text, user_display_name text, message text, channel text, time timestamp, bits int)")
-	err := createTableQuery.Exec()
+	err = createTableQuery.Exec()
 	if err != nil {
 		panic(err)
 	}

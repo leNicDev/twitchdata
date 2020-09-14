@@ -5,10 +5,9 @@ services:
     build:
       context: .
     environment:
-      - "CASSANDRA_HOSTS=cassandra-seed,cassandra1"
+      - "CASSANDRA_HOSTS=cassandra-seed"
     links:
       - cassandra-seed
-      - cassandra1
     networks:
       - twitchdata-network
     depends_on:
@@ -17,8 +16,6 @@ services:
 
   cassandra-seed:
     image: cassandra:latest
-    ports:
-      - "9042:9042"
     volumes:
       - "cassandra_data_seed:/var/lib/cassandra"
     environment:

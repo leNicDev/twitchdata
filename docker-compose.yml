@@ -5,7 +5,12 @@ services:
     build:
       context: .
     environment:
-      - "CASSANDRA_HOSTS=cassandra-seed"
+      - "CASSANDRA_HOSTS=cassandra-seed,cassandra1"
+    links:
+      - cassandra-seed
+      - cassandra1
+    networks:
+      - twitchdata-network
     depends_on:
       - cassandra-seed
       - cassandra1
@@ -22,6 +27,8 @@ services:
       #      needed for setting up custom cluster name
       - "CASSANDRA_DC=se1"
       - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
+    networks:
+      - twitchdata-network
   #    restart: always
 
   cassandra1:
@@ -34,6 +41,8 @@ services:
       #      needed for setting up custom cluster name
       - "CASSANDRA_DC=se1"
       - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
+    networks:
+      - twitchdata-network
     depends_on:
       - cassandra-seed
   #    restart: always
@@ -51,6 +60,9 @@ services:
 #    depends_on:
 #      - cassandra-seed
 #    restart: always
+
+networks:
+  twitchdata-network:
 
 volumes:
   cassandra_data_seed:
